@@ -1,11 +1,56 @@
 import React, { useState } from 'react'
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList } from 'react-native'
 import Color from '../helpers/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 
 SimpleLineIcons.loadFont();
 Ionicons.loadFont();
+
+const DATA = [
+    {
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        title: 'First Item',
+    },
+    {
+        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+        title: 'Second Item',
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571e29d72',
+        title: 'Third Item',
+    },
+    {
+        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+        title: 'First Item',
+    },
+    {
+        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+        title: 'Second Item',
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571e29d72',
+        title: 'Third Item',
+    },
+];
+
+const Item = ({ title }) => (
+    <View style={styles.day_item}>
+        <View>
+            <View style={styles.humidity_container}>
+                <Ionicons name="rainy-outline" size={15} color='#fff' />
+                <Text style={styles.humidity_text}>76%</Text>
+            </View>
+        </View>
+        <View style={styles.week_data}>
+            <Text>feafaef</Text>
+        </View>
+    </View>
+);
+
+const renderItem = ({ item }) => (
+    <Item title={item.title} />
+);
 
 const card = () => {
 
@@ -15,8 +60,9 @@ const card = () => {
     function ToggleDays() {
         Animated.spring(animated,
             {
-                toValue: !showWeek ? 300 : 0,
-                useNativeDriver: false
+                toValue: !showWeek ? 200 : 0,
+                useNativeDriver: false,
+                friction: 10
             }
         ).start()
         setShowWeek(!showWeek ? true : false)
@@ -49,9 +95,15 @@ const card = () => {
                 </View>
             </View>
             <Animated.View style={[styles.seeDays_list, { height: animated }]}>
-
+                {showWeek && (
+                    <FlatList
+                        data={DATA}
+                        renderItem={renderItem}
+                        keyExtractor={item => item.id}
+                    />
+                )}
             </Animated.View>
-            <TouchableOpacity style={styles.seeDays_container} onPress={() => ToggleDays()}>
+            <TouchableOpacity style={styles.seeDays_button} onPress={() => ToggleDays()}>
                 <SimpleLineIcons name={showWeek ? "arrow-up" : "arrow-down"} size={20} color={Color.secondary} />
             </TouchableOpacity>
         </View>
@@ -113,17 +165,24 @@ const styles = StyleSheet.create({
         color: Color.primary_very_lighter,
         marginTop: -10
     },
-    seeDays_container: {
+    seeDays_button: {
         backgroundColor: '#fff',
         borderTopWidth: 1,
         borderTopColor: '#e3e3e3',
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        padding: 10
     },
     seeDays_list: {
-        backgroundColor: 'green',
-    }
-
+        backgroundColor: Color.primary_very_lighter,
+    },
+    day_item: {
+        borderBottomColor: Color.primary_very_lighter_2,
+        borderBottomWidth: 1,
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
 });
 
 export default card
