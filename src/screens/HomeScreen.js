@@ -1,13 +1,15 @@
-import React from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import { Header } from 'react-navigation-stack';
+import Color from '../helpers/colors'
+
+import API from '../helpers/api'
+import config from '../env'
 
 import Card from '../components/card'
 
-//geocode api key
-//497f490d728efb79b168dabc70a3fbdd
-// api key overweather 98e2d49d03a8f428be9880cb11b43b9c
 
+import Cities from '../helpers/cities.json'
 
 const DATA = [
   {
@@ -24,22 +26,51 @@ const DATA = [
   },
 ];
 
-const Item = ({ item }) => (
-  <Card item={item}/>
-);
-
 const HomeScreen = () => {
-  const renderItem = ({ item }) => (
-    <Item title={item.title} />
+
+  const [loadingCities, setloadingCities] = useState(true)
+  const [citiesWeather, setCitiesWeather] = useState()
+
+  useEffect(() => {
+    loadCitiesList()
+  }, [])
+
+  async function loadCitiesList() {
+
+    let cities_ids = []
+
+    await Cities.map((item) => {
+      cities_ids.push(item.id)
+    })
+
+    await API.get('group?id='+ cities_ids +'&units=metric&appid=' + config.openWeatherKey).then(function (response) {
+      setCitiesWeather(response.data.list)
+    })
+    .catch((error) => console.debug(error))
+    .then(() => { setloadingCities(false) })
+  }
+
+  const renderEmptyContainer = () => (
+    <View style={styles.containerEmpty}>
+      <Text style={styles.city_notfound_text}>No cities found</Text>
+    </View>
   );
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+      {loadingCities ? (
+        <View style={styles.containerEmpty}>
+          <ActivityIndicator size="large" color={Color.primary_lighter} />
+        </View>
+      ) : (
+        <FlatList
+          data={citiesWeather}
+          renderItem={({ item }) => <Card item={item} />}
+          keyExtractor={item => item.id}
+          ListEmptyComponent={renderEmptyContainer}
+        />
+      )}
+
     </View>
   );
 }
@@ -47,7 +78,7 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Header.HEIGHT, 
+    marginTop: Header.HEIGHT,
     backgroundColor: '#e6edf0'
   },
   item: {
@@ -58,6 +89,16 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+  },
+  containerEmpty: {
+    flex: 1,
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  city_notfound_text: {
+    fontSize: 30,
+    color: Color.primary_lighter,
   },
 });
 

@@ -1,61 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList } from 'react-native'
 import Color from '../helpers/colors'
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
+import Feather from 'react-native-vector-icons/Feather';
+import moment from 'moment-timezone';
+import WeatherIcons from '../components/weatherIcons'
 
 SimpleLineIcons.loadFont();
 Ionicons.loadFont();
+Feather.loadFont();
 
-const DATA = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        title: 'First Item',
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        title: 'Second Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        title: 'Third Item',
-    },
-];
 
-const Item = ({ title }) => (
-    <View style={styles.day_item}>
-        <View>
-            <View style={styles.humidity_container}>
-                <Ionicons name="rainy-outline" size={15} color='#fff' />
-                <Text style={styles.humidity_text}>76%</Text>
-            </View>
-        </View>
-        <View style={styles.week_data}>
-            <Text>feafaef</Text>
-        </View>
-    </View>
-);
 
-const renderItem = ({ item }) => (
-    <Item title={item.title} />
-);
-
-const card = () => {
-
+const card = (item) => {
     const [showWeek, setShowWeek] = useState(false)
     const [animated, setAnimated] = useState(new Animated.Value(0))
+
+    const data = item.item
 
     function ToggleDays() {
         Animated.spring(animated,
@@ -69,38 +31,51 @@ const card = () => {
 
     }
 
+    useEffect(() => {
+        console.log('teste')
+        console.log(data)
+        console.log(new Date(1621545253 * 1e3).toISOString().slice(-13, -5))
+    }, [])
+
     return (
         <View style={styles.container}>
             <View style={styles.container_wheather}>
                 {/* col1 */}
-                <View>
-                    <Text style={styles.text_degree}>86<Text style={styles.text_degree_symbol}>°</Text></Text>
-                    <Text style={styles.wheather_text}>CLOUDY</Text>
-                    <Text style={styles.city_text}>LISBOA PT</Text>
+                <View style={[styles.grid_item, { minWidth: 150 }]}>
+                    <Text style={styles.text_degree}>{parseInt(data.main.temp)}<Text style={styles.text_degree_symbol}>{'\u2103'}</Text></Text>
+                    <Text style={styles.wheather_text}>{data.weather[0].description}</Text>
+                    <Text style={styles.city_text}>{data.name}</Text>
                 </View>
 
                 {/* col2 */}
-                <View>
-                    <Ionicons name="rainy-outline" size={70} color={Color.secondary} style={{ marginTop: 10 }} />
+                <View style={[styles.grid_item, , { width: 100 }]}>
+                    <WeatherIcons data={data.weather[0].main} />
                 </View>
 
                 {/* col3 */}
-                <View>
+                <View style={[styles.grid_item, { alignItems: 'center' }]}>
                     <View style={styles.humidity_container}>
                         <Ionicons name="rainy-outline" size={15} color='#fff' />
-                        <Text style={styles.humidity_text}>76%</Text>
+                        <Text style={styles.humidity_text}>{data.clouds.all} %</Text>
                     </View>
-                    <Text style={styles.day_month_number}>30</Text>
-                    <Text style={styles.day_month}>MON</Text>
+
+
+                    <View style={styles.sunrise_container}>
+                        <Feather name="sunrise" size={15} color='#fff' />
+                        <Text style={styles.sunset_text}>{moment.unix(data.sys.sunrise).tz("Europe/Lisbon").format('HH:mm')}</Text>
+                    </View>
+
+                    <View style={styles.sunset_container}>
+                        <Feather name="sunset" size={15} color='#fff' />
+                        <Text style={styles.sunset_text}>{moment.unix(data.sys.sunset).tz("Europe/Lisbon").format('HH:mm')}</Text>
+                    </View>
+
+
                 </View>
             </View>
             <Animated.View style={[styles.seeDays_list, { height: animated }]}>
                 {showWeek && (
-                    <FlatList
-                        data={DATA}
-                        renderItem={renderItem}
-                        keyExtractor={item => item.id}
-                    />
+                    <Text>eafeafa</Text>
                 )}
             </Animated.View>
             <TouchableOpacity style={styles.seeDays_button} onPress={() => ToggleDays()}>
@@ -122,13 +97,21 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         justifyContent: 'space-between',
+
+    },
+
+    grid_item: {
+        // alignItems: 'center',
+        alignContent: 'center',
+        justifyContent: 'center'
     },
     text_degree: {
         color: '#575757',
-        fontSize: 70,
+        fontSize: 60,
         fontWeight: 'bold'
     },
     text_degree_symbol: {
+        textAlignVertical: 'center',
         color: Color.primary_very_lighter,
     },
     wheather_text: {
@@ -142,6 +125,7 @@ const styles = StyleSheet.create({
         color: Color.primary_lighter
     },
     humidity_container: {
+        width: 80,
         backgroundColor: Color.secondary,
         flexDirection: 'row',
         borderRadius: 30,
@@ -149,11 +133,50 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+
+    sunrise_container: {
+        width: 80,
+        backgroundColor: Color.blue,
+        flexDirection: 'row',
+        borderRadius: 30,
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+    },
+
+    sunset_container: {
+        width: 80,
+        backgroundColor: Color.orange,
+        flexDirection: 'row',
+        borderRadius: 30,
+        padding: 5,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+
+    sunset_text: {
+        color: '#fff',
+        fontWeight: 'bold',
+        marginLeft: 5
+    },
+
+    sunrise_text: {
+        color: '#fff',
+        fontWeight: 'bold',
+        marginLeft: 5
+    },
+
     humidity_text: {
         color: '#fff',
         fontWeight: 'bold',
         marginLeft: 5
     },
+
+    time_sys_text: {
+        color: '#000'
+    },
+
     day_month_number: {
         fontSize: 48,
         fontWeight: 'bold',

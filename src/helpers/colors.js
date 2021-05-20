@@ -4,7 +4,9 @@ const colors = {
     primary_lighter: '#46b8e0',
     primary_very_lighter: '#92d7f0',
     primary_very_lighter_2: '#aee2f5',
-    secondary: '#e33d6f'
+    secondary: '#e33d6f',
+    blue: '#14a3db',
+    orange: '#e36600'
 }
 
 export default colors

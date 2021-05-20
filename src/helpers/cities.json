@@ -1,0 +1,102 @@
+[
+    {
+        "id": 6458923,
+        "name": "Lisbon",
+        "state": "",
+        "country": "PT",
+        "coord": {
+            "lon": -9.14843,
+            "lat": 38.726349
+        }
+    },
+    {
+        "id": 1704129,
+        "name": "Madrid",
+        "state": "",
+        "country": "PH",
+        "coord": {
+            "lon": 125.964371,
+            "lat": 9.26211
+        }
+    },
+    {
+        "id": 2968815,
+        "name": "Paris",
+        "state": "",
+        "country": "FR",
+        "coord": {
+            "lon": 2.3486,
+            "lat": 48.853401
+        }
+    },
+    {
+        "id": 2950159,
+        "name": "Berlin",
+        "state": "",
+        "country": "DE",
+        "coord": {
+            "lon": 13.41053,
+            "lat": 52.524368
+        }
+    },
+    {
+        "id": 2618425,
+        "name": "Copenhagen",
+        "state": "",
+        "country": "DK",
+        "coord": {
+            "lon": 12.56553,
+            "lat": 55.675941
+        }
+    },
+    {
+        "id": 2845370,
+        "name": "Rom",
+        "state": "",
+        "country": "DE",
+        "coord": {
+            "lon": 7.38333,
+            "lat": 50.216671
+        }
+    },
+    {
+        "id": 2643743,
+        "name": "London",
+        "state": "",
+        "country": "GB",
+        "coord": {
+            "lon": -0.12574,
+            "lat": 51.50853
+        }
+    },
+    {
+        "id": 2072525,
+        "name": "Dublin",
+        "state": "",
+        "country": "AU",
+        "coord": {
+            "lon": 138.350006,
+            "lat": -34.450001
+        }
+    },
+    {
+        "id": 3067696,
+        "name": "Prague",
+        "state": "",
+        "country": "CZ",
+        "coord": {
+            "lon": 14.42076,
+            "lat": 50.088039
+        }
+    },
+    {
+        "id": 2761369,
+        "name": "Vienna",
+        "state": "",
+        "country": "AT",
+        "coord": {
+            "lon": 16.37208,
+            "lat": 48.208488
+        }
+    }
+]
