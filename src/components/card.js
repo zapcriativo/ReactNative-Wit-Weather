@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList } from 'react-native'
+
 import Color from '../helpers/colors'
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
+
+import WeatherIcons from './weatherIcons'
 import moment from 'moment-timezone';
-import WeatherIcons from '../components/weatherIcons'
+import Forecast from './forecast'
 
 SimpleLineIcons.loadFont();
 Ionicons.loadFont();
 Feather.loadFont();
 
 
-
-const card = (item) => {
+const card = (props) => {
     const [showWeek, setShowWeek] = useState(false)
     const [animated, setAnimated] = useState(new Animated.Value(0))
 
-    const data = item.item
+    const data = props.item
 
     function ToggleDays() {
         Animated.spring(animated,
@@ -28,18 +31,11 @@ const card = (item) => {
             }
         ).start()
         setShowWeek(!showWeek ? true : false)
-
     }
-
-    useEffect(() => {
-        console.log('teste')
-        console.log(data)
-        console.log(new Date(1621545253 * 1e3).toISOString().slice(-13, -5))
-    }, [])
 
     return (
         <View style={styles.container}>
-            <View style={styles.container_wheather}>
+            <TouchableOpacity style={styles.container_wheather} onPress={() => props.navigation.navigate('DetailScreen')}>
                 {/* col1 */}
                 <View style={[styles.grid_item, { minWidth: 150 }]}>
                     <Text style={styles.text_degree}>{parseInt(data.main.temp)}<Text style={styles.text_degree_symbol}>{'\u2103'}</Text></Text>
@@ -49,7 +45,7 @@ const card = (item) => {
 
                 {/* col2 */}
                 <View style={[styles.grid_item, , { width: 100 }]}>
-                    <WeatherIcons data={data.weather[0].main} />
+                    <WeatherIcons data={data.weather[0].main} size={80}/>
                 </View>
 
                 {/* col3 */}
@@ -72,10 +68,10 @@ const card = (item) => {
 
 
                 </View>
-            </View>
+            </TouchableOpacity>
             <Animated.View style={[styles.seeDays_list, { height: animated }]}>
                 {showWeek && (
-                    <Text>eafeafa</Text>
+                    <Forecast coords={data.coord} />
                 )}
             </Animated.View>
             <TouchableOpacity style={styles.seeDays_button} onPress={() => ToggleDays()}>

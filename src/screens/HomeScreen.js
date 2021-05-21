@@ -7,26 +7,9 @@ import API from '../helpers/api'
 import config from '../env'
 
 import Card from '../components/card'
-
-
 import Cities from '../helpers/cities.json'
 
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-  },
-];
-
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
 
   const [loadingCities, setloadingCities] = useState(true)
   const [citiesWeather, setCitiesWeather] = useState()
@@ -36,18 +19,17 @@ const HomeScreen = () => {
   }, [])
 
   async function loadCitiesList() {
-
     let cities_ids = []
 
     await Cities.map((item) => {
       cities_ids.push(item.id)
     })
 
-    await API.get('group?id='+ cities_ids +'&units=metric&appid=' + config.openWeatherKey).then(function (response) {
+    await API.get('group?id=' + cities_ids + '&units=metric&appid=' + config.openWeatherKey).then(function (response) {
       setCitiesWeather(response.data.list)
     })
-    .catch((error) => console.debug(error))
-    .then(() => { setloadingCities(false) })
+      .catch((error) => console.debug(error))
+      .then(() => { setloadingCities(false) })
   }
 
   const renderEmptyContainer = () => (
@@ -65,9 +47,10 @@ const HomeScreen = () => {
       ) : (
         <FlatList
           data={citiesWeather}
-          renderItem={({ item }) => <Card item={item} />}
+          renderItem={({ item }) => <Card item={item} navigation={navigation}/>}
           keyExtractor={item => item.id}
           ListEmptyComponent={renderEmptyContainer}
+          nestedScrollEnabled={true}
         />
       )}
 
@@ -78,7 +61,6 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: Header.HEIGHT,
     backgroundColor: '#e6edf0'
   },
   item: {
