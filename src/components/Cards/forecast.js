@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, ActivityIndicator, ScrollView } from 'react-native'
-import API from '../helpers/api'
-import config from '../env'
+import API from '../../helpers/api'
+import config from '../../env'
 
-import Color from '../helpers/colors'
-import WeatherIcons from './weatherIcons'
+import Color from '../../helpers/colors'
+import WeatherIcons from '../weatherIcons'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';

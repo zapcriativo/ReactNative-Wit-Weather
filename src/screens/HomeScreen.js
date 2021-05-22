@@ -1,30 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { SafeAreaView, View, FlatList, StyleSheet, Text, ActivityIndicator } from 'react-native';
-import { Header } from 'react-navigation-stack';
+import React, { useEffect, useState, useRef } from 'react';
+import { SafeAreaView, View, FlatList, StyleSheet, Text, ActivityIndicator, StatusBar, Animated } from 'react-native';
 import Color from '../helpers/colors'
-
 import API from '../helpers/api'
-import config from '../env'
-
-import Card from '../components/card'
 import Cities from '../helpers/cities.json'
 
-const HomeScreen = ({navigation}) => {
+import config from '../env'
+import Card from '../components/Cards/card'
+import Header from '../components/header'
+
+const HomeScreen = ({ navigation }) => {
 
   const [loadingCities, setloadingCities] = useState(true)
   const [citiesWeather, setCitiesWeather] = useState()
+  const [flatListScrollData, setflatListScrollData] = useState(new Animated.Value(0))
 
   useEffect(() => {
     loadCitiesList()
   }, [])
 
+  // Function to call weather of cities in the openWeather API
   async function loadCitiesList() {
     let cities_ids = []
-
-    await Cities.map((item) => {
-      cities_ids.push(item.id)
-    })
-
+    await Cities.map((item) => { cities_ids.push(item.id) })
     await API.get('group?id=' + cities_ids + '&units=metric&appid=' + config.openWeatherKey).then(function (response) {
       setCitiesWeather(response.data.list)
     })
@@ -32,11 +29,14 @@ const HomeScreen = ({navigation}) => {
       .then(() => { setloadingCities(false) })
   }
 
+  // Cities not found message container
   const renderEmptyContainer = () => (
     <View style={styles.containerEmpty}>
       <Text style={styles.city_notfound_text}>No cities found</Text>
     </View>
   );
+
+  const scrollY = useRef(new Animated.Value(0)).current
 
   return (
     <View style={styles.container}>
@@ -45,23 +45,54 @@ const HomeScreen = ({navigation}) => {
           <ActivityIndicator size="large" color={Color.primary_lighter} />
         </View>
       ) : (
-        <FlatList
-          data={citiesWeather}
-          renderItem={({ item }) => <Card item={item} navigation={navigation}/>}
-          keyExtractor={item => item.id}
-          ListEmptyComponent={renderEmptyContainer}
-          nestedScrollEnabled={true}
-        />
-      )}
+        <SafeAreaView>
+          <Header scrollY={scrollY} navigation={navigation}/>
+          <Animated.FlatList
+            data={citiesWeather}
+            onScroll={
+              Animated.event(
+                [
+                  {
+                    nativeEvent: {
+                      contentOffset: {
+                        y: scrollY
+                      }
+                    }
+                  }
+                ], { useNativeDriver: false }
+              )
+            }
+            renderItem={({ item }) => <Card item={item} navigation={navigation} />}
+            keyExtractor={item => item.id}
+            ListEmptyComponent={renderEmptyContainer}
+            scrollEventThrottle={1}
+          />
 
+        </SafeAreaView>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+
+
   container: {
     flex: 1,
     backgroundColor: '#e6edf0'
+  },
+
+  titleStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: 18,
   },
   item: {
     backgroundColor: '#fff',

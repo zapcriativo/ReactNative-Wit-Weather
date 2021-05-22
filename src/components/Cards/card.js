@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, Animated, FlatList } from 'react-native'
 
-import Color from '../helpers/colors'
+import Color from '../../helpers/colors'
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Feather from 'react-native-vector-icons/Feather';
 
-import WeatherIcons from './weatherIcons'
+import WeatherIcons from '../weatherIcons'
 import moment from 'moment-timezone';
 import Forecast from './forecast'
 
@@ -22,6 +22,7 @@ const card = (props) => {
 
     const data = props.item
 
+    // Expand and collapse bottom weather card animation
     function ToggleDays() {
         Animated.spring(animated,
             {
@@ -35,7 +36,9 @@ const card = (props) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.container_wheather} onPress={() => props.navigation.navigate('DetailScreen')}>
+            <TouchableOpacity style={styles.container_wheather} onPress={() => props.navigation.navigate('DetailScreen',{
+                id: props.item.id,
+            })}>
                 {/* col1 */}
                 <View style={[styles.grid_item, { minWidth: 150 }]}>
                     <Text style={styles.text_degree}>{parseInt(data.main.temp)}<Text style={styles.text_degree_symbol}>{'\u2103'}</Text></Text>

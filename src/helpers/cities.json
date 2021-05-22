@@ -4,9 +4,10 @@
         "name": "Lisbon",
         "state": "",
         "country": "PT",
-        "coord": {
-            "lon": -9.14843,
-            "lat": 38.726349
+        "picture": "https://i.insider.com/5a0b634b7c86cc3d038b47f0?width=1000&format=jpeg",
+        "coord":  {
+            "lon": -9.1333300,
+            "lat": 38.7166700
         }
     },
     {
@@ -14,7 +15,8 @@
         "name": "Madrid",
         "state": "",
         "country": "PH",
-        "coord": {
+        "picture": "https://www.euandopelomundo.com/wp-content/uploads/2019/01/catedral_madrid.jpg",
+        "coord":  {
             "lon": 125.964371,
             "lat": 9.26211
         }
@@ -24,7 +26,8 @@
         "name": "Paris",
         "state": "",
         "country": "FR",
-        "coord": {
+        "picture": "https://blog.flytour.com.br/wp-content/uploads/2014/09/paris.jpg",
+        "coord":  {
             "lon": 2.3486,
             "lat": 48.853401
         }
@@ -32,9 +35,10 @@
     {
         "id": 2950159,
         "name": "Berlin",
-        "state": "",
+        "state": "https://images.unsplash.com/photo-1560969184-10fe8719e047?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YmVybGlufGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&w=1000&q=80",
         "country": "DE",
-        "coord": {
+        "picture": "",
+        "coord":  {
             "lon": 13.41053,
             "lat": 52.524368
         }
@@ -44,7 +48,8 @@
         "name": "Copenhagen",
         "state": "",
         "country": "DK",
-        "coord": {
+        "picture": "https://wallpaperaccess.com/full/1179981.jpg",
+        "coord":  {
             "lon": 12.56553,
             "lat": 55.675941
         }
@@ -54,7 +59,8 @@
         "name": "Rom",
         "state": "",
         "country": "DE",
-        "coord": {
+        "picture": "https://wallpapercave.com/wp/wp3146366.jpg",
+        "coord":  {
             "lon": 7.38333,
             "lat": 50.216671
         }
@@ -62,9 +68,10 @@
     {
         "id": 2643743,
         "name": "London",
-        "state": "",
+        "state": "https://lp-cms-production.imgix.net/image_browser/london-big-ben.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850",
         "country": "GB",
-        "coord": {
+        "picture": "",
+        "coord":  {
             "lon": -0.12574,
             "lat": 51.50853
         }
@@ -72,9 +79,10 @@
     {
         "id": 2072525,
         "name": "Dublin",
-        "state": "",
+        "state": "https://wallpaperaccess.com/full/760496.jpg",
         "country": "AU",
-        "coord": {
+        "picture": "",
+        "coord":  {
             "lon": 138.350006,
             "lat": -34.450001
         }
@@ -84,7 +92,8 @@
         "name": "Prague",
         "state": "",
         "country": "CZ",
-        "coord": {
+        "picture": "https://wallpaperaccess.com/full/41214.jpg",
+        "coord":  {
             "lon": 14.42076,
             "lat": 50.088039
         }
@@ -94,7 +103,8 @@
         "name": "Vienna",
         "state": "",
         "country": "AT",
-        "coord": {
+        "picture": "https://wallpaperaccess.com/full/156595.jpg",
+        "coord":  {
             "lon": 16.37208,
             "lat": 48.208488
         }
