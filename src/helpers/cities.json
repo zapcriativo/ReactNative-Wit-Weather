@@ -68,9 +68,9 @@
     {
         "id": 2643743,
         "name": "London",
-        "state": "https://lp-cms-production.imgix.net/image_browser/london-big-ben.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850",
+        "state": "",
         "country": "GB",
-        "picture": "",
+        "picture": "https://lp-cms-production.imgix.net/image_browser/london-big-ben.jpg?auto=format&fit=crop&sharp=10&vib=20&ixlib=react-8.6.4&w=850",
         "coord":  {
             "lon": -0.12574,
             "lat": 51.50853

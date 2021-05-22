@@ -66,6 +66,7 @@ const HomeScreen = ({ navigation }) => {
             keyExtractor={item => item.id}
             ListEmptyComponent={renderEmptyContainer}
             scrollEventThrottle={1}
+            contentContainerStyle={{paddingBottom: 100}} 
           />
 
         </SafeAreaView>
@@ -81,8 +82,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-
-
 
   container: {
     flex: 1,
