@@ -23,6 +23,7 @@ const DetailScreen = (props) => {
     const [cityForecast, setcityForecast] = useState(null)
     const [cityDetails, setCityDetails] = useState(null)
     const [loadingCity, setloadingCity] = useState(true)
+    const [ImageLoading, setImageLoading] = useState(true)
     const { params } = props.navigation.state;
 
     useEffect(() => {
@@ -68,8 +69,11 @@ const DetailScreen = (props) => {
                     <ActivityIndicator size="large" color={Color.primary_lighter} />
                 </View>
             ) : (
-                <ScrollView>
-                    <Image source={{ uri: cityDetails.picture ? cityDetails.picture : 'https://cdn.statically.io/img/wallpaperaccess.com/full/236200.jpg' }} style={styles.picture_card} />
+                <ScrollView >
+                    <View style={{height: 300, width: windowWidth, backgroundColor: Color.primary_very_lighter,}}>
+                        <Image source={{ uri: cityDetails.picture ? cityDetails.picture : 'https://cdn.statically.io/img/wallpaperaccess.com/full/236200.jpg' }} onLoadEnd={() => setImageLoading(false)} style={styles.picture_card} />
+                        {ImageLoading && (<ActivityIndicator size="large" color={'#fff'} style={{ marginTop: 90 }} />)}
+                    </View>
                     <View style={styles.container_context}>
                         <View style={styles.container_title}>
 
@@ -145,14 +149,14 @@ const styles = StyleSheet.create({
 
     },
     city_title: {
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: 'bold',
         color: '#575757',
         textTransform: 'uppercase',
     },
     text_degree: {
         color: '#575757',
-        fontSize: 35,
+        fontSize: 30,
         fontWeight: 'bold',
         marginLeft: 10
     },
